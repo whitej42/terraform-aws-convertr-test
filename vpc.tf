@@ -40,12 +40,11 @@ resource "aws_vpc_endpoint" "s3_vpc_endpoint" {
   route_table_ids = [aws_route_table.demo_private_route_table.id]
   tags = local.default_tags
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = {
-      Effect    = "Allow"
-      Action    = "s3:*"
-      Resource  = "${aws_s3_bucket.file_upload_bucket.arn}/*"
-    }
-  })
+  # policy = jsonencode({
+  #   Statement = {
+  #     Effect    = "Allow"
+  #     Action    = "s3:*"
+  #     Resource  = "${aws_s3_bucket.file_upload_bucket.arn}/*"
+  #   }
+  # })
 }

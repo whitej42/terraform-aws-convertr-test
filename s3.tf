@@ -7,12 +7,6 @@ resource "aws_s3_bucket" "file_upload_bucket" {
   tags = local.default_tags
 }
 
-resource "aws_s3_bucket_acl" "file_upload_bucket" {
-    bucket = aws_s3_bucket.file_upload_bucket.id
-    acl = "private"
-    depends_on = [ aws_s3_bucket.file_upload_bucket ]
-}
-
 resource "aws_s3_bucket_server_side_encryption_configuration" "file_upload_bucket_server_side_encryption" {
   bucket = aws_s3_bucket.file_upload_bucket.id
 

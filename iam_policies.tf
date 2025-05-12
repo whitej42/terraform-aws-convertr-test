@@ -33,8 +33,18 @@ data "aws_iam_policy_document" "file_upload_iam_policy" {
       "logs:CreateLogStream",
       "logs:PutLogEvents"
     ]
-    resources = [
-      aws_cloudwatch_log_group.file_upload_lambda_log_group.arn
+    resources = ["*"]
+  }
+
+  statement {
+    sid = "AllowEC2Access"
+    effect = "Allow"
+
+    actions = [
+      "ec2:CreateNetworkInterface",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DeleteNetworkInterface"
     ]
+    resources = ["*"]
   }
 }

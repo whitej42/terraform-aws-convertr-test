@@ -38,7 +38,10 @@ resource "aws_vpc_endpoint" "s3_vpc_endpoint" {
   service_name = "com.amazonaws.us-east-1.s3"
   vpc_endpoint_type = "Gateway"
   route_table_ids = [aws_route_table.demo_private_route_table.id]
-  tags = local.default_tags
+
+  tags = merge(local.default_tags,{
+        Name = "${local.env}-s3-gateway-enddoint"
+    })
 
   # policy = jsonencode({
   #   Statement = {

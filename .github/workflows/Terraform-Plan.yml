@@ -2,8 +2,11 @@ name: Terraform-Plan
 
 on:
   push:
+    branches-ignore:
+      - main
+  pull_request:
     branches:
-      - develop
+      - main
 
 jobs:
   terraform:

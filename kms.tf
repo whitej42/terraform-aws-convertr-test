@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "file_upload_kms_key_policy" {
     principals {
       type        = "AWS"
       identifiers = [
-          aws_kms_alias.file_upload_kms_key_alias
+          data.aws_iam_role.terraform_role.arn
         ]
     }
   }

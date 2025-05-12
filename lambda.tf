@@ -25,6 +25,11 @@ resource "aws_lambda_function" "file_upload_lambda_function" {
         security_group_ids = [aws_security_group.file_upload_lambda_sg.id]
     }
 
+    logging_config {
+      log_format = "Text"
+      log_group = aws_cloudwatch_log_group.file_upload_lambda_log_group.name
+    }
+
     environment {
       variables = {
         BUCKET_NAME = aws_s3_bucket.file_upload_bucket.id

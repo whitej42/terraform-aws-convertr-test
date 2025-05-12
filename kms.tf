@@ -12,7 +12,7 @@ resource "aws_kms_key" "file_upload_kms_key" {
   customer_master_key_spec = "SYMMETRIC_DEFAULT"
   is_enabled               = true
   enable_key_rotation      = true
-  policy = data.aws_iam_policy_document.file_upload_kms_key_policy[0].json
+  policy = data.aws_iam_policy_document.file_upload_kms_key_policy.json
 
   tags = local.default_tags
 }

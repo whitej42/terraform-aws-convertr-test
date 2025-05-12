@@ -30,5 +30,13 @@ resource "aws_lambda_permission" "file_upload_lambda_api_permissions" {
   function_name = aws_lambda_function.file_upload_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn    = "${aws_api_gateway_rest_api.upload_api.execution_arn}/*/*"
+  source_arn    = "${aws_api_gateway_rest_api.upload_rest_api.execution_arn}/*/*"
+}
+
+# Layers for additional Python packages
+resource "aws_lambda_layer_version" "filetype_lambda_layer" {
+  filename   = "${path.module}/src/lambda/file_upload/filetype_layer"
+  layer_name = "filetype_layer_name"
+
+  compatible_runtimes = ["python3.13"]
 }

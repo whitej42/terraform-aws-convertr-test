@@ -33,7 +33,7 @@ resource "aws_s3_bucket_ownership_controls" "file_upload_bucket_ownership_contro
 
 resource "aws_s3_bucket_policy" "file_upload_bucket_policy" {
   bucket = aws_s3_bucket.file_upload_bucket.id
-  policy = data.aws_iam_policy_document.file_upload_s3_policy[0].json
+  policy = data.aws_iam_policy_document.file_upload_s3_policy.json
 }
 
 data "aws_iam_policy_document" "file_upload_s3_policy" {

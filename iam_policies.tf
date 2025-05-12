@@ -1,11 +1,10 @@
 ###############
 # IAM Polices #
 ###############
-resource "aws_iam_policy" "file_upload_lambda_role_policy" {
+resource "aws_iam_role_policy" "file_upload_lambda_role_policy" {
     name = "${local.env}-convertrFileUpload-S3-policy"
-    tags = local.default_tags
-
-    policy = data.aws_iam_policy_document.file_upload_iam_policy[0].json
+    role = aws_iam_role.file_upload_lambda_role.name
+    policy = data.aws_iam_policy_document.file_upload_iam_policy.json
 }
 
 data "aws_iam_policy_document" "file_upload_iam_policy" {
@@ -34,6 +33,8 @@ data "aws_iam_policy_document" "file_upload_iam_policy" {
       "logs:CreateLogStream",
       "logs:PutLogEvents"
     ]
-    resources = aws_cloudwatch_log_group.file_upload_lambda_log_group.arn
+    resources = [
+      aws_cloudwatch_log_group.file_upload_lambda_log_group.arn
+    ]
   }
 }

@@ -56,6 +56,17 @@ resource "aws_network_acl_rule" "private_inbound_ephemeral" {
   to_port        = 65535
 }
 
+resource "aws_network_acl_rule" "private_outbound_ephemeral" {
+  network_acl_id = aws_network_acl.demo_private_acl.id
+  rule_number    = 100
+  egress          = true
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 0
+  to_port        = 65535
+}
+
 # S3 VPC Endpoint
 resource "aws_vpc_endpoint" "s3_vpc_endpoint" {
   vpc_id       = aws_vpc.demo_vpc.id

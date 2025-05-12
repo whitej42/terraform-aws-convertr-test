@@ -32,6 +32,30 @@ resource "aws_route_table_association" "demo_private_subnet_association" {
   route_table_id = aws_route_table.demo_private_route_table.id
 }
 
+# Network ACL Rules
+resource "aws_network_acl" "demo_private_acl" {
+  vpc_id = aws_vpc.demo_vpc.id
+  tags = merge(local.default_tags, {
+    Name = "Demo Private ACL"
+  })
+}
+
+resource "aws_network_acl_association" "private_acl_association" {
+  network_acl_id = aws_network_acl.demo_private_acl.id
+  subnet_id = aws_subnet.demo_private_subnet.id
+}
+
+resource "aws_network_acl_rule" "private_inbound_ephemeral" {
+  network_acl_id = aws_network_acl.demo_private_acl.id
+  rule_number    = 100
+  egress          = false
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 0
+  to_port        = 65535
+}
+
 # S3 VPC Endpoint
 resource "aws_vpc_endpoint" "s3_vpc_endpoint" {
   vpc_id       = aws_vpc.demo_vpc.id
@@ -40,14 +64,15 @@ resource "aws_vpc_endpoint" "s3_vpc_endpoint" {
   route_table_ids = [aws_route_table.demo_private_route_table.id]
 
   tags = merge(local.default_tags,{
-        Name = "${local.env}-s3-gateway-enddoint"
-    })
+      Name = "${local.env}-s3-gateway-endpoint"
+  })
 
-  # policy = jsonencode({
-  #   Statement = {
-  #     Effect    = "Allow"
-  #     Action    = "s3:*"
-  #     Resource  = "${aws_s3_bucket.file_upload_bucket.arn}/*"
-  #   }
-  # })
+  policy = jsonencode({
+    Statement = {
+      Principal = "*"
+      Effect    = "Allow"
+      Action    = "s3:*"
+      Resource  = "${aws_s3_bucket.file_upload_bucket.arn}/*"
+    }
+  })
 }

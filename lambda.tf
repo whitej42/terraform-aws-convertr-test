@@ -26,7 +26,7 @@ resource "aws_lambda_function" "file_upload_lambda_function" {
     }
 
     logging_config {
-      log_format = "TEXT"
+      log_format = "Text"
       log_group = aws_cloudwatch_log_group.file_upload_lambda_log_group.name
     }
 

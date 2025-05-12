@@ -39,4 +39,4 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -var="repo_url=$REPO_URL" -no-color -detailed-exitcode
+      run: terraform plan -var="repo_url=$REPO_URL"

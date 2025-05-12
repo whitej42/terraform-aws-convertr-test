@@ -37,7 +37,8 @@ Roles follow least privilege, designed specifically for the Lambda execution, KM
 GitHub Actions is used to deploy the Terraform code to AWS via the automated pipeline. OpenID Connect is used to assume a specific Terraform IAM Role in AWS to deploy infrastructure.
 
 ##  Future Enhancements
-- API key enforcement or IAM-based authorization
-- File-type filtering (e.g., allow only image MIME types)
-- Antivirus/malware scanning using tools like Amazon Macie or third-party AV
-- Frontend integration for drag-and-drop or form-based uploads
+- Data Encryption Keys (DEKs) for true end-to-end encryption
+- API key or IAM-based authorization on API Endpoint
+- File-type filtering (e.g., allow only image types)
+- Antivirus/malware scanning using tools like Amazon Macie or third-party Anti-Virus
+- Frontend integration

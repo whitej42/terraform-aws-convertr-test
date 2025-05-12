@@ -1,0 +1,48 @@
+name: Terraform-Apply
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Terraform-Apply
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      
+    env:
+      REPO_URL: https://github.com/${{ github.repository }}
+      AWS_REGION: 'us-east-1'
+
+    steps:
+    - name: Checkout the repository to the runner
+      uses: actions/checkout@v3
+    
+    - name: Configure AWS Credentials via OIDC
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::212892117339:role/TerraformPipelineDeployerRole 
+        aws-region: us-east-1
+
+    - name: Terraform Setup
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color -detailed-exitcode
+      continue-on-error: true
+
+    - name: Terraform Plan Status
+      if: steps.plan.outcome == 'failure'
+      run: exit 1
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve -input=false

@@ -33,7 +33,9 @@ data "aws_iam_policy_document" "file_upload_iam_policy" {
       "logs:CreateLogStream",
       "logs:PutLogEvents"
     ]
-    resources = ["*"]
+    resources = [
+      aws_cloudwatch_log_group.file_upload_lambda_log_group.arn
+    ]
   }
 
   statement {

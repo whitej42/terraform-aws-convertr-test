@@ -22,7 +22,12 @@ resource "aws_lambda_function" "file_upload_lambda_function" {
 
     vpc_config {
         subnet_ids         = [aws_subnet.demo_private_subnet.id]
-        security_group_ids = [aws_security_group.file_upload_lambda_sg.id]
+        security_group_ids = [aws_security_group.lambda_sg.id]
+    }
+
+    logging_config {
+      log_format = "TEXT"
+      log_group = aws_cloudwatch_log_group.file_upload_lambda_log_group.name
     }
 
     environment {

@@ -2,23 +2,17 @@
 This solution enables secure file uploads to Amazon S3 using API Gateway and a private Lambda function. It leverages AWS-managed services with a security-first architecture, ensuring all traffic and data handling remain private and controlled.
 
 ## Architecture Overview
-- API Gateway
-Provides a public-facing REST endpoint to receive file uploads.
+- API Gateway provides a public-facing REST endpoint to receive file uploads.
 
-- Lambda (Private)
-Handles decoding and validation of uploaded files, and securely stores them in S3. Runs within a VPC for added security.
+- Lambda (Private) handles decoding and validation of uploaded files, and securely stores them in S3. Runs within a VPC for added security.
 
-- S3 Bucket (with KMS)
-Stores uploaded files encrypted at rest using a Customer Managed Key (CMK).
+- S3 Bucket (with KMS) stores uploaded files encrypted at rest using a Customer Managed Key (CMK).
 
-- KMS CMK
-Custom key allows fine-grained control — only the Lambda role and Terraform deployer role can use it to encrypt/decrypt.
+- KMS CMK custom key allows fine-grained control — only the Lambda role and Terraform deployer role can use it to encrypt/decrypt.
 
-- VPC Gateway Endpoint for S3
-Ensures all S3 traffic from Lambda stays within AWS’s private network, never traversing the public internet.
+- VPC Gateway Endpoint for S3 ensures all S3 traffic from Lambda stays within AWS’s private network, never traversing the public internet.
 
-- IAM Roles
-Roles follow least privilege, designed specifically for the Lambda execution, KMS encryption, and S3 access.
+- IAM Roles follow least privilege, designed specifically for the Lambda execution, KMS encryption, and S3 access.
 
 ## Testing via Postman
 - Method: POST

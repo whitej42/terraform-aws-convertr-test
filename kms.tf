@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "file_upload_kms_key_policy" {
     }
   }
 
-  # Key service users 
+  # Key service users
   statement {
       sid = "KeyUsage"
       actions = [

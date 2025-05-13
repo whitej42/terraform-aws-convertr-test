@@ -32,7 +32,7 @@ resource "aws_route_table_association" "demo_private_subnet_association" {
   route_table_id = aws_route_table.demo_private_route_table.id
 }
 
-# Network ACL Rules
+# Network ACL
 resource "aws_network_acl" "demo_private_acl" {
   vpc_id = aws_vpc.demo_vpc.id
   tags = merge(local.default_tags, {
